@@ -25,17 +25,17 @@ const io = require("socket.io")(server)
 
 //listen on untuk semua koneksi
 io.on('connection', (socket) => {
-	console.log('Kendaraan masuk!')
+	console.log('New user connected')
 
 	//pemberian nama awal
-	socket.username = "Kontainer"
+	socket.username = "Anonymous"
 
     //listen ketika nama diganti
     socket.on('change_username', (data) => {
         socket.username = data.username
     })
 
-    //listen on Pesan baru
+    //listen on Pesan baru coek
     socket.on('new_message', (data) => {
         //broadcast the new message
         io.sockets.emit('new_message', {message : data.message, username : socket.username});

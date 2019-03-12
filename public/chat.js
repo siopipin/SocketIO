@@ -37,22 +37,6 @@ $(function(){
 	socket.on('typing', (data) => {
 		feedback.html("<p><i>" + data.username + " sedang mengetik pesan..." + "</i></p>")
 	})
-
-
-	//untuk Timbang
-	var btnUp = $("#btnUp")
-	var message = 1000
-	
-	//Emit Truk Masuk
-	btnUp.click(function(){
-		socket.emit('new_message', {message})
-	})
-
-	//Listen on new_message
-	socket.on("new_message", (data) => {
-		
-		chatroom.append("<p class='message'>" + data.message + "</p>")
-	})
 });
 
 
