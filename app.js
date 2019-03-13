@@ -1,78 +1,101 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
+app.use(cors())
 //Menggunakan view engine ejs
 app.set("view engine", "ejs");
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+  var oneof = false;
+  if(req.headers.origin) {
+      res.header('Access-Control-Allow-Origin', req.headers.origin);
+      oneof = true;
+  }
+  if(req.headers['access-control-request-method']) {
+      res.header('Access-Control-Allow-Methods', req.headers['access-control-request-method']);
+      oneof = true;
+  }
+  if(req.headers['access-control-request-headers']) {
+      res.header('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
+      oneof = true;
+  }
+  if(oneof) {
+      res.header('Access-Control-Max-Age', 60 * 60 * 24 * 365);
+  }
+
+  // intercept OPTIONS method
+  if (oneof && req.method == 'OPTIONS') {
+      res.send(200);
+  }
+  else {
+      next();
+  }
 });
+
 
 //middlewarenya
 app.use(express.static("public"));
 //routes
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   res.render("index");
 });
 
-app.get("/control", (req, res) => {
-    res.render("control");
-  });
+app.get("/control", (req, res, next) => {
+  res.render("control");
+});
 
-  
+app.get("/data", (req,res) => {
+  res.render("data");
+})
+
 
 //Listen menggunakan port 3000
 server = app.listen(3000);
 
 //instantitation atau pembuatan object spesifik socket.io
-const io = require("socket.io")(server, { origins: '*:*'});
+const io = require("socket.io")(server, { origins: '*:*' });
 
 //listen on untuk semua koneksi
-io.on("connection",  socket => {
-  // console.log('New user connected')
-
-  // //pemberian nama awal
-  // socket.username = "Anonymous"
-
-  // //listen ketika nama diganti
-  // socket.on('change_username', (data) => {
-  //     socket.username = data.username
-  // })
+io.on("connection", socket => {
+  console.log('New client connected')
 
   //listen on Pesan baru coek
   socket.on("message", data => {
-      console.log(data)
+    console.log(data)
     // //broadcast the new message
     // io.sockets.emit('new_message', {message : data.message, username : socket.username});
     if (data === "mulai") {
-        var target = 8000
-        var lama = 4000
-        var interval = 200
+      var target = Math.floor((Math.random() * 100) + 1)
+      var lama = Math.floor((Math.random() * 5000) + 1)
+      var interval = 40
 
-        var start = new Date();
-        var angkaInterval = setInterval(() => {
-          var skrg = new Date();
-          var selisihWaktu = skrg - start;
-          var persentase = selisihWaktu / lama;
-          var hasil = lerp(0, target, persentase);
-          console.log(hasil)
-          io.emit("berat",hasil.toFixed(2));
-          if (persentase > 1) clearInterval(angkaInterval); // batalkan interval kalau sudah lebih capai 100 persen
-        }, interval);
+      var start = new Date();
+      var angkaInterval = setInterval(() => {
+        var skrg = new Date();
+        var selisihWaktu = skrg - start;
+        var persentase = selisihWaktu / lama;
+        var hasil = lerp(0, target, persentase);
+        console.log(hasil)
+        io.emit("berat", hasil.toFixed(2));
+        if (persentase > 1) clearInterval(angkaInterval); // batalkan interval kalau sudah lebih capai 100 persen
+      }, interval);
 
     }
   });
 
-  // //listen ketika melakukan typing
-  // socket.on('typing', (data) => {
-  // 	socket.broadcast.emit('typing', {username : socket.username})
-  // })
+  //catatan
+  socket.on("AppSimpan", data => {
+    if (data === "simpan") {
+      var pesan = "Truk"
+      console.log(pesan)
+      io.emit("ViewSimpan", pesan)
+    }
+  })
 
   // server olah data
 });
 
-var lerp = function(dari, ke, n) {
+var lerp = function (dari, ke, n) {
   // n diisi dengan nilai 0 s/d 1
   if (n > 1) return ke;
   else if (n < 0) return dari;
