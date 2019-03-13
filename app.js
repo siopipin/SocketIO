@@ -44,10 +44,6 @@ app.get("/control", (req, res, next) => {
   res.render("control");
 });
 
-app.get("/data", (req,res) => {
-  res.render("data");
-})
-
 
 //Listen menggunakan port 3000
 server = app.listen(3000);
