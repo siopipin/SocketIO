@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 const app = express();
+var ip = require("ip");
+console.dir ( ip.address() );
 app.use(cors())
 //Menggunakan view engine ejs
 app.set("view engine", "ejs");
@@ -56,14 +58,14 @@ io.on("connection", socket => {
   console.log('New client connected')
 
   //listen on Pesan baru coek
-  socket.on("message", data => {
+  socket.on("berat", data => {
     console.log(data)
     // //broadcast the new message
     // io.sockets.emit('new_message', {message : data.message, username : socket.username});
-    if (data === "mulai") {
+    if (data === "hitung") {
       var target = Math.floor((Math.random() * 100) + 1)
-      var lama = Math.floor((Math.random() * 5000) + 1)
-      var interval = 40
+      var lama = Math.floor((Math.random() * 4000) + 1)
+      var interval = 10 
 
       var start = new Date();
       var angkaInterval = setInterval(() => {
@@ -71,8 +73,9 @@ io.on("connection", socket => {
         var selisihWaktu = skrg - start;
         var persentase = selisihWaktu / lama;
         var hasil = lerp(0, target, persentase);
+        var addr = ip.address();
         console.log(hasil)
-        io.emit("berat", hasil.toFixed(2));
+        io.emit("berat", {hasil : hasil.toFixed(2), satuan: "KG", ipaddress: addr});
         if (persentase > 1) clearInterval(angkaInterval); // batalkan interval kalau sudah lebih capai 100 persen
       }, interval);
 
