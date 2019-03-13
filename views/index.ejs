@@ -35,16 +35,26 @@
     </ul>
   </section>
 
-  <section>
-    <span>Mode:</span>
-    <button id="live">Live</button>
-    <button id="simulasi">Simulasi</button>
-  </section>
+  <div class="row">
+    <div class="col">
+      <p>Mode</p>
+    </div>
+    <div class="col">
+      <button class="btn btn-default">Live</button>
+      <button id="simulasi" class="btn btn-primary">Simulasi</button>
+      <button id="vAuto" class="btn btn-danger">Auto</button>
+    </div>
+  </div>
 
-  <section>
-    <span>Alamat: </span>
-    <span id="vaddress"></span>
-  </section>
+  <div class="row" style="margin-top: 5px">
+      <div class="col">
+        <p>Alamat</p>
+      </div>
+      <div class="col">
+        <p id="vaddress"></p>
+      </div>
+    </div>
+  
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="controller.js"></script>

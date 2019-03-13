@@ -6,11 +6,12 @@ $(function () {
 	var simulasi = $("#simulasi")
 	var satuan = $("#satuan")
 	var address = $("#vaddress")
-	// var myList = $("#myList")
-
+	var cAuto = $("#vAuto")
+	
 	//Simulasi Emit
 	simulasi.click(function() {
 		socket.emit("berat", 'hitung')
+
 	})
 
 	//Tampilkan message
@@ -23,6 +24,18 @@ $(function () {
 	//Tampilkan list
 	socket.on('ViewSimpan', data => {
 		var node = document.createElement("LI");
+	})
+
+
+	cAuto.click(function() {
+		socket.emit("mAuto", 'hitung')
+	})
+
+	//Tampilkan message
+	socket.on('mAuto', data => {
+		display.html(data.hasil),
+		satuan.html(data.satuan),
+		address.html(data.ipaddress)
 	})
 
 	
