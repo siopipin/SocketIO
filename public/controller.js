@@ -8,9 +8,14 @@ $(function () {
 	var address = $("#vaddress")
 	var cAuto = $("#vAuto")
 	
+	var cMin=document.getElementById("vMin").value;  
+	var cMax=document.getElementById("vMax").value;
+	
+	//var data = document.getElementById("display").textContent;
+	
 	//Simulasi Emit
 	simulasi.click(function() {
-		socket.emit("berat", 'hitung')
+		socket.emit("berat", {start: "start"})
 
 	})
 
@@ -28,7 +33,8 @@ $(function () {
 
 
 	cAuto.click(function() {
-		socket.emit("mAuto", 'hitung')
+		alert(cMin)
+		socket.emit("mAuto", {mHitung: 'Start', mMin: cMin, mMax:cMax })
 	})
 
 	//Tampilkan message
@@ -38,6 +44,15 @@ $(function () {
 		address.html(data.ipaddress)
 		cAuto.removeClass("btn-danger");
 		cAuto.addClass("btn-primary")
+	});
+
+
+	// Pemicu
+	socket.emit("ip");
+
+	// Menerima data dari server
+	socket.on('hasil', data => {
+		address.html(data)
 	})
 });
 

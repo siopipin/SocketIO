@@ -24,34 +24,60 @@
 <body>
 
   <div class="container">
-    
-  <div class="card" >
+
+    <div class="card">
       <div class="card-body">
         <h1 style="text-align: center">Berat Muatan</h1>
         <section style="text-align: center">
-          <h1 id="display" style="font-size: 60pt">0</h1>
-          <p id="satuan"></p>
+          <span id="display" style="font-size: 60pt">0.00</span>
+          <span id="satuan"></span>
         </section>
-        <section style="margin-bottom: 10px">
+     
+        <hr>
+        <!-- <section style="margin-bottom: 10px">
           <button onclick="myFunction()" class="btn btn-danger btn-lg btn-block">Simpan</button>
           <br>
           <br>
-  
+
           <ul class="list-group" id="myList">
           </ul>
-        </section>
-  
+        </section> -->
+
         <div class="row">
           <div class="col">
             <p>Mode</p>
           </div>
           <div class="col">
-            <button class="btn btn-default">Live</button>
-            <button id="simulasi" class="btn btn-primary">Simulasi</button>
-            <button id="vAuto" class="btn btn-danger">Auto</button>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-default btn-lg btn-block">Live</button>
+              </div>
+            </div>
+            <br>
+            <form>
+              <div class="row">
+                <div class="col-md-12">
+                  <button id="vAuto" class="btn btn-primary btn-lg btn-block">Simulasi Auto</button>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="input-group mb-3">
+                  <div class="col">
+                    <input type="number" step="100" id="vMin" name="vMin" min="0" value="800" class="form-control" placeholder="Min" aria-label="Max"
+                      aria-describedby="basic-addon2">
+                  </div>
+                  <div class="col">
+                    <input type="number" step="100" id="vMax" name="vMax" min="0" value="1500" class="form-control" placeholder="Max" aria-label="Max"
+                      aria-describedby="basic-addon2">
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
+          <!-- <button id="simulasi" class="btn btn-primary">Simulasi</button> -->
         </div>
-  
+
         <div class="row" style="margin-top: 5px">
           <div class="col">
             <p>Alamat</p>
@@ -62,6 +88,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 
 
