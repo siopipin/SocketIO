@@ -7,33 +7,6 @@ app.use(cors())
 //Menggunakan view engine ejs
 app.set("view engine", "ejs");
 
-app.use(function (req, res, next) {
-  var oneof = false;
-  if (req.headers.origin) {
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    oneof = true;
-  }
-  if (req.headers['access-control-request-method']) {
-    res.header('Access-Control-Allow-Methods', req.headers['access-control-request-method']);
-    oneof = true;
-  }
-  if (req.headers['access-control-request-headers']) {
-    res.header('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
-    oneof = true;
-  }
-  if (oneof) {
-    res.header('Access-Control-Max-Age', 60 * 60 * 24 * 365);
-  }
-
-  // intercept OPTIONS method
-  if (oneof && req.method == 'OPTIONS') {
-    res.send(200);
-  }
-  else {
-    next();
-  }
-});
-
 
 //middlewarenya
 app.use(express.static("public"));
@@ -51,7 +24,7 @@ app.get("/control", (req, res, next) => {
 server = app.listen(3000);
 
 //instantitation atau pembuatan object spesifik socket.io
-const io = require("socket.io")(server, { origins: '*:*' });
+const io = require("socket.io")(server);
 
 //listen on untuk semua koneksi
 io.on("connection", socket => {
@@ -90,6 +63,7 @@ io.on("connection", socket => {
     if (data === "hitung") {
 
       var i = 1;
+      var waktuTunggu = Math.floor((Math.random() * 5500)+1)
 
       function myLoop() {
         setTimeout(function () {
@@ -112,10 +86,10 @@ io.on("connection", socket => {
 
           i++;
 
-          if (i < 10){
+          if (i < 20){
             myLoop()
           }
-        }, 3000)
+        }, waktuTunggu)
       }
 
       myLoop();

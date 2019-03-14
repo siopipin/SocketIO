@@ -16,45 +16,56 @@
   <link href="/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
 
-  <title>Sio Chat</title>
+  <title>Timbang</title>
 </head>
 
 <body>
-  <h1 style="text-align: center">Berat Muatan</h1>
-  <section style="text-align: center">
-    <h1 id="display">0</h1> <p id="satuan"></p>
-  </section>
-  <section style="margin-bottom: 10px">
-    <button onclick="myFunction()" class="btn btn-danger btn-lg btn-block">Simpan</button>
-    <br>
-    <br>
 
-    <ul class="list-group" id="myList">
-    </ul>
-  </section>
-
-  <div class="row">
-    <div class="col">
-      <p>Mode</p>
-    </div>
-    <div class="col">
-      <button class="btn btn-default">Live</button>
-      <button id="simulasi" class="btn btn-primary">Simulasi</button>
-      <button id="vAuto" class="btn btn-danger">Auto</button>
+  <div class="container">
+    
+  <div class="card" >
+      <div class="card-body">
+        <h1 style="text-align: center">Berat Muatan</h1>
+        <section style="text-align: center">
+          <h1 id="display" style="font-size: 60pt">0</h1>
+          <p id="satuan"></p>
+        </section>
+        <section style="margin-bottom: 10px">
+          <button onclick="myFunction()" class="btn btn-danger btn-lg btn-block">Simpan</button>
+          <br>
+          <br>
+  
+          <ul class="list-group" id="myList">
+          </ul>
+        </section>
+  
+        <div class="row">
+          <div class="col">
+            <p>Mode</p>
+          </div>
+          <div class="col">
+            <button class="btn btn-default">Live</button>
+            <button id="simulasi" class="btn btn-primary">Simulasi</button>
+            <button id="vAuto" class="btn btn-danger">Auto</button>
+          </div>
+        </div>
+  
+        <div class="row" style="margin-top: 5px">
+          <div class="col">
+            <p>Alamat</p>
+          </div>
+          <div class="col">
+            <p id="vaddress"></p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="row" style="margin-top: 5px">
-      <div class="col">
-        <p>Alamat</p>
-      </div>
-      <div class="col">
-        <p id="vaddress"></p>
-      </div>
-    </div>
-  
+
+
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="controller.js"></script>
