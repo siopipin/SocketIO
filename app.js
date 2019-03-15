@@ -60,7 +60,7 @@ io.on("connection", socket => {
         var hasil = lerp(0, target, persentase);
         var addr = ip.address();
         console.log(hasil)
-
+        
         io.emit("berat", { hasil: hasil.toFixed(2), satuan: "KG" });
         if (persentase > 1) {
           clearInterval(angkaInterval); // batalkan interval kalau sudah lebih capai 100 persen
@@ -91,23 +91,11 @@ io.on("connection", socket => {
   //terima data dari client
   socket.on("mAuto", data => {
     console.log(data.mHitung)
-    
-
     if (data.mHitung === "Start") {
+      console.log(data.mMin)
       createSimulasi(data.mMin, data.mMax)
     }
   });
-
-  //catatan
-  socket.on("AppSimpan", data => {
-    if (data === "simpan") {
-      var pesan = "Truk"
-      console.log(pesan)
-      io.emit("ViewSimpan", pesan)
-    } 
-  });
-
-
   // server olah data
 });
 
@@ -122,7 +110,11 @@ var lerp = function (dari, ke, n) {
 function createSimulasi (min,max) {
   clearInterval(idInterval) // protection
   var start = new Date();
-  var target = Math.floor((Math.random() * (max-min)) + min)
+  console.log("Min Value = " + min)
+  var mMaximal = max - min;
+  console.log("Nilai Maksimal = " +  mMaximal)
+  var target = Math.floor((Math.random() * mMaximal) + min)
+  console.log("Target = " + target)
   var lama = Math.floor((Math.random() * 4000) + 2000)
   var interval = 100
 
@@ -131,9 +123,9 @@ function createSimulasi (min,max) {
     var selisihWaktu = skrg - start;
     var persentase = selisihWaktu / lama;
     var hasil = lerp(0, target, persentase);
-    var addr = ip.address();
     console.log(hasil)
-    io.emit("mAuto", { hasil: hasil.toFixed(2), satuan: "KG", ipaddress: addr });
+
+    io.emit("mAuto", { hasil: hasil.toFixed(2), satuan: "KG" });
 
     if (persentase > 1) {
       clearInterval(idInterval); // batalkan interval kalau sudah lebih capai 100 persen
@@ -154,7 +146,7 @@ function createSimulasi (min,max) {
             clearInterval(idInterval)
             var durasiTahan = Math.floor((Math.random() * 3000) + 1000)
             idInterval = setTimeout(() => {
-              idInterval = createSimulasi()
+              idInterval = createSimulasi(min, max)
             }, durasiTahan)
           }
         })

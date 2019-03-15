@@ -29,7 +29,7 @@
       <div class="card-body">
         <h1 style="text-align: center">Berat Muatan</h1>
         <section style="text-align: center">
-          <span id="display" style="font-size: 60pt">0.00</span>
+          <span id="display" style="font-size: 80pt">0.00</span>
           <span id="satuan"></span>
         </section>
      
@@ -50,12 +50,12 @@
           <div class="col">
             <div class="row">
               <div class="col-md-12">
-                <button class="btn btn-default btn-lg btn-block">Live</button>
+                <button id="vLive" class="btn btn-default btn-lg btn-block">Live</button>
               </div>
             </div>
             <br>
             <form>
-              <div class="row">
+              <div class="row" id="vTombol">
                 <div class="col-md-12">
                   <button id="vAuto" class="btn btn-primary btn-lg btn-block">Simulasi Auto</button>
                 </div>
@@ -64,11 +64,11 @@
               <div class="row">
                 <div class="input-group mb-3">
                   <div class="col">
-                    <input type="number" step="100" id="vMin" name="vMin" min="0" value="800" class="form-control" placeholder="Min" aria-label="Max"
+                    <input type="number" step="100" id="vMin" name="vMin" min="0" class="form-control" placeholder="Min" aria-label="Max"
                       aria-describedby="basic-addon2">
                   </div>
                   <div class="col">
-                    <input type="number" step="100" id="vMax" name="vMax" min="0" value="1500" class="form-control" placeholder="Max" aria-label="Max"
+                    <input type="number" step="100" id="vMax" name="vMax" min="0" class="form-control" placeholder="Max" aria-label="Max"
                       aria-describedby="basic-addon2">
                   </div>
                 </div>
