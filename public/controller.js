@@ -82,8 +82,6 @@ $(function () {
 
 		cAuto.removeClass("btn-primary");
 		cAuto.addClass("btn-danger")
-
-
 	});
 
 

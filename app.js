@@ -19,6 +19,13 @@ app.get("/control", (req, res, next) => {
   res.render("control");
 });
 
+app.get('/timbang/data', (req,res) => {
+  res.status(200).send({
+    success: 'true',
+    hasil: "90"
+  })
+})
+
 
 //Listen menggunakan port 3000
 server = app.listen(3000);
@@ -113,7 +120,12 @@ function createSimulasi (min,max) {
   console.log("Min Value = " + min)
   var mMaximal = max - min;
   console.log("Nilai Maksimal = " +  mMaximal)
-  var target = Math.floor((Math.random() * mMaximal) + min)
+
+
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  var target = Math.floor(Math.random() * (max-min + 1)) + min;
+  
   console.log("Target = " + target)
   var lama = Math.floor((Math.random() * 4000) + 2000)
   var interval = 100
@@ -123,9 +135,13 @@ function createSimulasi (min,max) {
     var selisihWaktu = skrg - start;
     var persentase = selisihWaktu / lama;
     var hasil = lerp(0, target, persentase);
+
+    var alamat = ip.address();
+
+  
     console.log(hasil)
 
-    io.emit("mAuto", { hasil: hasil.toFixed(2), satuan: "KG" });
+    io.emit("mAuto", { hasil: hasil.toFixed(2), satuan: "KG", ip: alamat });
 
     if (persentase > 1) {
       clearInterval(idInterval); // batalkan interval kalau sudah lebih capai 100 persen
