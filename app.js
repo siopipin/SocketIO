@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 var ip = require("ip");
 
+
 app.use(cors())
 //Menggunakan view engine ejs
 app.set("view engine", "ejs");
