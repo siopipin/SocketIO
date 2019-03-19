@@ -2,8 +2,6 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 var ip = require("ip");
-var socketio = require("socket.io")
-
 
 app.use(cors())
 //Menggunakan view engine ejs
@@ -37,40 +35,39 @@ app.get("/socket", (req, res, next) => {
 server = app.listen(3000);
 
 //instantitation atau pembuatan object spesifik socket.io
-const io = socketio(app.listen(4000));
 
 var idInterval
 var mConnected = 0;
 //listen on untuk semua koneksi
-io.on("connection", socket => {
+// io.on("connection", socket => {
   
-  var mIp = ip.address();
-  var mSocketId = socket.id;
-  var mClientIp = socket.request.connection.remoteAddress;
+//   var mIp = ip.address();
+//   var mSocketId = socket.id;
+//   var mClientIp = socket.request.connection.remoteAddress;
   
 
-  console.log(mConnected +' New client connected from IP Address : ' + mClientIp + ' dengan ID Socket: ' + mSocketId);
-  console.log(mIp);
+//   console.log(mConnected +' New client connected from IP Address : ' + mClientIp + ' dengan ID Socket: ' + mSocketId);
+//   console.log(mIp);
 
-  // Menerima request dari client
-  socket.on('ip', data => {
-    var mIp = ip.address();
+//   // Menerima request dari client
+//   socket.on('ip', data => {
+//     var mIp = ip.address();
 
-    // Kirim ip
-    socket.emit("hasil", mIp);
-  });
+//     // Kirim ip
+//     socket.emit("hasil", mIp);
+//   });
 
-  //terima data dari client
-  socket.on("mAuto", data => {
-    console.log(data.mHitung)
-    if (data.mHitung === "Start") {
-      console.log(data.mMin)
-      createSimulasi(data.mMin, data.mMax)
-    }
-  });
-  // server olah data
-  mConnected++
-});
+//   //terima data dari client
+//   socket.on("mAuto", data => {
+//     console.log(data.mHitung)
+//     if (data.mHitung === "Start") {
+//       console.log(data.mMin)
+//       createSimulasi(data.mMin, data.mMax)
+//     }
+//   });
+//   // server olah data
+//   mConnected++
+// });
 
 var lerp = function (dari, ke, n) {
   // n diisi dengan nilai 0 s/d 1
