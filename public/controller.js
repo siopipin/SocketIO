@@ -71,8 +71,8 @@ $(function () {
 	//Tampilkan message
 	socket.on('mAuto', data => {
 		display.html(data.hasil),
-		satuan.html(data.satuan),
-		address.html(data.ipaddress)
+			satuan.html(data.satuan),
+			address.html(data.ipaddress)
 	});
 
 
@@ -85,6 +85,43 @@ $(function () {
 	})
 });
 
+//Push
+$(function () {
+	// Enable pusher logging - don't include this in production
+	Pusher.logToConsole = true;
+
+	var pusher = new Pusher('428b5fc4e48a2f8e0131', {
+		cluster: 'ap1',
+		forceTLS: true
+	});
+
+	var channel = pusher.subscribe('my-channel');
+	channel.bind('my-event', function (data) {
+		alert(JSON.stringify(data));
+	});
+
+
+	cAuto.click(function () {
+		var cMin = document.getElementById('vMin').value;
+		var cMax = document.getElementById('vMax').value;
+		if (cMin == "" || cMax == "") {
+			alert("Tidak Boleh Kosong")
+			return false
+		}
+		else if (cMin >= cMax || cMax <= cMin) {
+			alert("Periksa Masukkan")
+		}
+		else if (cMin < 1) {
+			alert("Tidak boleh lebih kecil dari 1")
+		}
+		else {
+			alert(cMin);
+			pusher.trigger('mData', 'mAuto', {
+				"mHitung": 'Start', "mMin": cMin, "mMax": cMax
+			})
+		}
+	})
+})
 
 //Fungsi simpan berat di list
 function myFunction() {

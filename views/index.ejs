@@ -4,8 +4,8 @@
 <head>
   <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
   <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css" />
-   <!-- <link rel="stylesheet" type="text/css" href="style.css" /> -->
- 
+  <!-- <link rel="stylesheet" type="text/css" href="style.css" /> -->
+
   <link rel="stylesheet" href="/assets/css/argon.css?v=1.0.0" />
   <link href="/assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -14,16 +14,17 @@
   <link href="/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 
-
-  <script src="/socket.io/socket.io.js"></script>
+  <!-- Pusher Script -->
+  <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 
   <!-- Bulma -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
- 
 
-  <title>Timbang</title>
+
+
+  <title>Timbang - Pusher</title>
 </head>
 
 <body>
@@ -37,7 +38,7 @@
           <span id="display" style="font-size: 70pt">0.00</span>
           <span id="satuan"></span>
         </section>
-     
+
         <hr>
         <!-- <section style="margin-bottom: 10px">
           <button onclick="myFunction()" class="btn btn-danger btn-lg btn-block">Simpan</button>
@@ -70,13 +71,13 @@
                 <div class="input-group mb-3">
                   <!-- input id vmin -->
                   <div class="col">
-                    <input type="number" step="100" id="vMin" name="vMin" min="0" class="form-control" placeholder="Min" aria-label="Max"
-                      aria-describedby="basic-addon2">
+                    <input type="number" step="100" id="vMin" name="vMin" min="0" class="form-control" placeholder="Min"
+                      aria-label="Max" aria-describedby="basic-addon2">
                   </div>
                   <!-- input id vmax -->
                   <div class="col">
-                    <input type="number" step="100" id="vMax" name="vMax" min="0" class="form-control" placeholder="Max" aria-label="Max"
-                      aria-describedby="basic-addon2">
+                    <input type="number" step="100" id="vMax" name="vMax" min="0" class="form-control" placeholder="Max"
+                      aria-label="Max" aria-describedby="basic-addon2">
                   </div>
                 </div>
               </div>
@@ -93,6 +94,13 @@
             <p id="vaddress"></p>
           </div>
         </div>
+
+        <!-- pusher -->
+        <h1>Pusher Test</h1>
+        <p>
+          Try publishing an event to channel <code>my-channel</code>
+          with event name <code>my-event</code>.
+        </p>
       </div>
     </div>
   </div>

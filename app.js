@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 var ip = require("ip");
+var Pusher = require('pusher');
 
 app.use(cors())
 //Menggunakan view engine ejs
@@ -68,6 +69,23 @@ var mConnected = 0;
 //   // server olah data
 //   mConnected++
 // });
+
+
+var pusher = new Pusher({
+  appId: '738997',
+  key: '428b5fc4e48a2f8e0131',
+  secret: '69679ebedc2faf257369',
+  cluster: 'ap1',
+  encrypted: true
+});
+
+pusher.trigger('my-channel', 'my-event', {
+  "message": "hello world"
+});
+
+var
+
+
 
 var lerp = function (dari, ke, n) {
   // n diisi dengan nilai 0 s/d 1
