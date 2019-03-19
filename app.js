@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 var ip = require("ip");
+var socketio = require("socket.io")
 
 
 app.use(cors())
@@ -28,19 +29,28 @@ app.get('/timbang/data', (req,res) => {
 })
 
 
+app.get("/socket", (req, res, next) => {
+  res.render("socket");
+});
+
 //Listen menggunakan port 3000
 server = app.listen(3000);
 
 //instantitation atau pembuatan object spesifik socket.io
-const io = require("socket.io")(server);
+const io = socketio(app.listen(4000));
 
 var idInterval
-
+var mConnected = 0;
 //listen on untuk semua koneksi
 io.on("connection", socket => {
-  console.log('New client connected')
+  
   var mIp = ip.address();
-  console.log(mIp)
+  var mSocketId = socket.id;
+  var mClientIp = socket.request.connection.remoteAddress;
+  
+
+  console.log(mConnected +' New client connected from IP Address : ' + mClientIp + ' dengan ID Socket: ' + mSocketId);
+  console.log(mIp);
 
   // Menerima request dari client
   socket.on('ip', data => {
@@ -48,52 +58,6 @@ io.on("connection", socket => {
 
     // Kirim ip
     socket.emit("hasil", mIp);
-  });
-
-  //listen on simulasi awal
-  socket.on("berat", data => {
-
-
-    // //broadcast the new message
-    // io.sockets.emit('new_message', {message : data.message, username : socket.username});
-    if (data.start === "start") {
-      var target = Math.floor((Math.random() * 1500) + 1)
-      var lama = Math.floor((Math.random() * 3000) + 3000)
-      var interval = 10
-      var start = new Date();
-      var angkaInterval = setInterval(() => {
-        var skrg = new Date();
-        var selisihWaktu = skrg - start;
-        var persentase = selisihWaktu / lama;
-        var hasil = lerp(0, target, persentase);
-        var addr = ip.address();
-        console.log(hasil)
-        
-        io.emit("berat", { hasil: hasil.toFixed(2), satuan: "KG" });
-        if (persentase > 1) {
-          clearInterval(angkaInterval); // batalkan interval kalau sudah lebih capai 100 persen
-
-          var durasiTahan = Math.floor((Math.random() * 3000) + 3000)
-          setTimeout(() => {
-            var start2 = new Date();
-            var lama2 = lama
-            var angkaInterval2 = setInterval(() => {
-              var skrg2 = new Date();
-              var selisihWaktu2 = skrg2 - start2;
-              var persentase2 = selisihWaktu2 / lama2;
-              var hasil2 = lerp(target, 0, persentase2); // target ke nol (dibalik)
-              console.log(hasil2)
-
-              io.emit("berat", { hasil: hasil2.toFixed(2), satuan: "KG" });
-              if (persentase2 > 1) clearInterval(angkaInterval2)
-            })
-          }, durasiTahan)
-        }
-      }, interval);
-
-
-
-    }
   });
 
   //terima data dari client
@@ -105,6 +69,7 @@ io.on("connection", socket => {
     }
   });
   // server olah data
+  mConnected++
 });
 
 var lerp = function (dari, ke, n) {

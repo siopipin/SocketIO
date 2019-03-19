@@ -1,7 +1,7 @@
 
 $(function () {
   //make connection
-  var socket = io.connect('http://localhost:3000')
+  var socket = io.connect('http://localhost:4000')
 
   //Deklarasi
   var send_message = $("#send_message")

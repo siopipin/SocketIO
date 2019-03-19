@@ -66,22 +66,13 @@ $(function () {
 			alert(cMin)
 			socket.emit("mAuto", { mHitung: 'Start', mMin: cMin, mMax: cMax })
 		}
-
-		// var cTombol2 = document.createElement("BUTTON");
-		// var cTomboltext = document.createTextNode("STOP");
-		// cTombol2.classList.add("btn btn-default btn-lg btn-block");
-		// // cTombol2.appendChild(cTomboltext);
-		// document.getElementById("vTombol").appendChild(cTombol2);
 	})
 
 	//Tampilkan message
 	socket.on('mAuto', data => {
 		display.html(data.hasil),
-			satuan.html(data.satuan),
-			address.html(data.ipaddress)
-
-		cAuto.removeClass("btn-primary");
-		cAuto.addClass("btn-danger")
+		satuan.html(data.satuan),
+		address.html(data.ipaddress)
 	});
 
 
