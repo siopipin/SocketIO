@@ -60,4 +60,15 @@ cAuto.click(function (event) {
 			data: { min: cMin, max: cMax }
 		})
 	}
-})
+});
+
+var display = $("#display");
+var address = $("#vaddress");
+
+
+var channel2 = pusher.subscribe('timbang3');
+channel2.bind('mAuto', function (data) {
+	display.html(data.hasil),
+	satuan.html(data.satuan),
+	address.html(data.ipaddress)
+});

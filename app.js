@@ -152,7 +152,7 @@ function createSimulasi(min, max) {
 
   console.log("Target = " + target)
   var lama = Math.floor((Math.random() * 4000) + 2000)
-  var interval = 100
+  var interval = 200
 
   var idInterval = setInterval(() => {
     var skrg = new Date();
@@ -165,8 +165,10 @@ function createSimulasi(min, max) {
 
     console.log(hasil)
 
-    io.emit("mAuto", { hasil: hasil.toFixed(2), satuan: "KG", ip: alamat });
-
+    pusher.trigger('timbang3', 'mAuto', { 
+      hasil: hasil.toFixed(2), satuan: "KG", ip: alamat 
+    });
+ 
     if (persentase > 1) {
       clearInterval(idInterval); // batalkan interval kalau sudah lebih capai 100 persen
 
@@ -181,7 +183,9 @@ function createSimulasi(min, max) {
           var hasil3 = lerp(target, 0, persentase3); // target ke nol (dibalik)
           console.log(hasil3)
 
-          io.emit("mAuto", { hasil: hasil3.toFixed(2), satuan: "KG" });
+          pusher.trigger('timbang3', 'mAuto', { 
+            hasil: hasil.toFixed(2), satuan: "KG", ip: alamat 
+          });
           if (persentase3 > 1) {
             clearInterval(idInterval)
             var durasiTahan = Math.floor((Math.random() * 3000) + 1000)
