@@ -1,10 +1,15 @@
 const express = require("express");
 const cors = require('cors');
 const app = express();
+const bodyParser = require('body-parser')
 var ip = require("ip");
 var Pusher = require('pusher');
+var PusherJS = require('pusher-js')
 
 app.use(cors())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 //Menggunakan view engine ejs
 app.set("view engine", "ejs");
 
@@ -20,7 +25,7 @@ app.get("/control", (req, res, next) => {
   res.render("control");
 });
 
-app.get('/timbang/data', (req,res) => {
+app.get('/timbang/data', (req, res) => {
   res.status(200).send({
     success: 'true',
     hasil: "90"
@@ -32,6 +37,31 @@ app.get("/socket", (req, res, next) => {
   res.render("socket");
 });
 
+app.post('/auth-pusher', (req,res,next) => {
+  console.log('ada yang coba otentikasi')
+  var socketId = req.body.socket_id;
+  var channel = req.body.channel_name;
+  var presenceData = {
+    user_id: 'unique_user_id',
+    user_info: {
+      name: 'Mr Channels',
+      twitter_id: '@pusher'
+    }
+  };
+  var auth = pusher.authenticate(socketId, channel, presenceData);
+  res.send(auth);
+})
+
+app.get('/start-simulasi', (req,res,next) => {
+  console.log(req.body)
+})
+
+app.post('/start-simulasi', (req,res,next) => {
+  console.log('ada yang post ke simulasi');
+  console.log(req.body.min)
+  createSimulasi(req.body.min, req.body.max);
+ })
+
 //Listen menggunakan port 3000
 server = app.listen(3000);
 
@@ -41,11 +71,11 @@ var idInterval
 var mConnected = 0;
 //listen on untuk semua koneksi
 // io.on("connection", socket => {
-  
+
 //   var mIp = ip.address();
 //   var mSocketId = socket.id;
 //   var mClientIp = socket.request.connection.remoteAddress;
-  
+
 
 //   console.log(mConnected +' New client connected from IP Address : ' + mClientIp + ' dengan ID Socket: ' + mSocketId);
 //   console.log(mIp);
@@ -79,12 +109,25 @@ var pusher = new Pusher({
   encrypted: true
 });
 
-pusher.trigger('my-channel', 'my-event', {
-  "message": "hello world"
+var socket = new PusherJS('428b5fc4e48a2f8e0131', {
+	cluster: 'ap1',
+	forceTLS: true
 });
 
-var
+//Get Ip Address
+var mIp = ip.address();
+pusher.trigger('my-channel', 'my-event', {
+  "ip": mIp
+});
 
+Pusher.logToConsole = true;
+var channel = socket.subscribe('private-timbang');
+channel.bind('mAuto', function (data)
+{
+  createSimulasi()
+})
+
+//terima data dari client
 
 
 var lerp = function (dari, ke, n) {
@@ -95,18 +138,18 @@ var lerp = function (dari, ke, n) {
 };
 
 
-function createSimulasi (min,max) {
+function createSimulasi(min, max) {
   clearInterval(idInterval) // protection
   var start = new Date();
   console.log("Min Value = " + min)
   var mMaximal = max - min;
-  console.log("Nilai Maksimal = " +  mMaximal)
+  console.log("Nilai Maksimal = " + mMaximal)
 
 
   min = Math.ceil(min);
   max = Math.floor(max);
-  var target = Math.floor(Math.random() * (max-min + 1)) + min;
-  
+  var target = Math.floor(Math.random() * (max - min + 1)) + min;
+
   console.log("Target = " + target)
   var lama = Math.floor((Math.random() * 4000) + 2000)
   var interval = 100
@@ -119,7 +162,7 @@ function createSimulasi (min,max) {
 
     var alamat = ip.address();
 
-  
+
     console.log(hasil)
 
     io.emit("mAuto", { hasil: hasil.toFixed(2), satuan: "KG", ip: alamat });

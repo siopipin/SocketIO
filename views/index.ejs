@@ -28,9 +28,7 @@
 </head>
 
 <body>
-
   <div class="container is-fluit">
-
     <div class="card">
       <div class="card-body">
         <h1 style="text-align: center">Berat Muatan</h1>
@@ -38,17 +36,7 @@
           <span id="display" style="font-size: 70pt">0.00</span>
           <span id="satuan"></span>
         </section>
-
         <hr>
-        <!-- <section style="margin-bottom: 10px">
-          <button onclick="myFunction()" class="btn btn-danger btn-lg btn-block">Simpan</button>
-          <br>
-          <br>
-
-          <ul class="list-group" id="myList">
-          </ul>
-        </section> -->
-
         <div class="row">
           <div class="col">
             <p>Mode</p>
@@ -71,19 +59,18 @@
                 <div class="input-group mb-3">
                   <!-- input id vmin -->
                   <div class="col">
-                    <input type="number" step="100" id="vMin" name="vMin" min="0" class="form-control" placeholder="Min"
+                    <input type="number" value="500" step="100" id="vMin" name="vMin" min="0" class="form-control" placeholder="Min"
                       aria-label="Max" aria-describedby="basic-addon2">
                   </div>
                   <!-- input id vmax -->
                   <div class="col">
-                    <input type="number" step="100" id="vMax" name="vMax" min="0" class="form-control" placeholder="Max"
+                    <input type="number" value="800" step="100" id="vMax" name="vMax" min="0" class="form-control" placeholder="Max"
                       aria-label="Max" aria-describedby="basic-addon2">
                   </div>
                 </div>
               </div>
             </form>
           </div>
-          <!-- <button id="simulasi" class="btn btn-primary">Simulasi</button> -->
         </div>
 
         <div class="row" style="margin-top: 5px">
@@ -94,13 +81,6 @@
             <p id="vaddress"></p>
           </div>
         </div>
-
-        <!-- pusher -->
-        <h1>Pusher Test</h1>
-        <p>
-          Try publishing an event to channel <code>my-channel</code>
-          with event name <code>my-event</code>.
-        </p>
       </div>
     </div>
   </div>
